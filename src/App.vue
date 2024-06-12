@@ -1,14 +1,16 @@
 <template>
   <div class="app-container">
+    <Toast ref="toast" />
     <header>
       <h1>Controle e Monitoramento de Temperatura</h1>
       <h2>Temperatura Interna do Refrigerador</h2>
       <div class="header-buttons">
         <button @click="showDialog">Editar Temperatura Ideal</button>
-        <button @click="generateReport">Gerar Relatórios</button>
+        <button @click="showReportDialog">Gerar Relatórios</button>
       </div>
     </header>
     <EditTemperatureDialog :visible="dialogVisible" @submit="submitForm" @cancel="cancelForm" />
+    <ReportDialog :visible="reportDialogVisible" @submit="submitReportForm" @cancel="cancelReportForm" />
     <div class="content">
       <div class="temperature-chart">
         <TemperatureChart />
@@ -23,31 +25,46 @@
 <script>
 import TemperatureChart from './components/TemperatureChart.vue';
 import EditTemperatureDialog from './components/EditTemperatureDialog.vue';
+import ReportDialog from './components/ReportDialog.vue';
+import Toast from 'primevue/toast';
+import ToastService from 'primevue/toastservice';
 
 export default {
   components: {
     TemperatureChart,
-    EditTemperatureDialog
+    EditTemperatureDialog,
+    ReportDialog,
+    Toast
   },
   data() {
     return {
-      dialogVisible: false
+      dialogVisible: false,
+      reportDialogVisible: false
     };
+  },
+  mounted() {
+    this.$toast = this.$toast || this.$root.$toast;
   },
   methods: {
     showDialog() {
       this.dialogVisible = true;
     },
-    async submitForm(formData) {
-      console.log('Dados do formulário:', formData);
+    async submitForm() {
       this.dialogVisible = false;
     },
     cancelForm() {
       this.dialogVisible = false;
     },
-    generateReport() {
-      console.log('Gerando relatório...');
-      // Lógica para gerar relatório vai aqui
+    showReportDialog() {
+      this.reportDialogVisible = true;
+    },
+    submitReportForm(dates) {
+      console.log('Datas selecionadas para o relatório:', dates);
+      this.reportDialogVisible = false;
+      // Lógica adicional para manipulação de dados do relatório, se necessário
+    },
+    cancelReportForm() {
+      this.reportDialogVisible = false;
     }
   }
 }

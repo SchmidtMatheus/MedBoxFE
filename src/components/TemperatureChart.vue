@@ -20,7 +20,10 @@ const chartOptions = ref({
       }
     },
     toolbar: {
-      show: false
+      show: true,
+      offsetX: 0,
+      offsetY: 30,
+
     }
   },
   xaxis: {
@@ -30,8 +33,7 @@ const chartOptions = ref({
     }
   },
   yaxis: {
-    min: 12, // Define o valor mínimo do eixo Y como 0
-    max: 25, // Define o valor máximo do eixo Y como 30
+
     title: {
       text: 'Temperatura (°C)'
     }
@@ -66,14 +68,14 @@ const series = ref([
 const updateChart = async () => {
   try {
     const measuredDataResponse = await axios.get('http://localhost:3000/registries');
-    
+
     let measuredData = measuredDataResponse.data.map(entry => ({
       x: new Date(entry.created_at).getTime(),
       y: parseFloat(entry.temperature.toFixed(2))
     }));
 
     // Obtenha os últimos 50 registros
-    measuredData = measuredData.slice(-80);
+    measuredData = measuredData.slice(-60);
 
     const desiredDataResponse = await axios.get('http://localhost:3000/configs/2');
     const desiredTemperature = desiredDataResponse.data.temperature;

@@ -18,6 +18,8 @@
     "axios": "^1.6.8",
     "chart.js": "^3.9.1",
     "datepicker": "^0.0.0",
+    "primeicons": "^7.0.0",
+    "primevue": "^3.52.0",
     "vue": "^3.4.21",
     "vue-apexcharts": "^1.6.2",
     "vue-router": "^4.3.0",

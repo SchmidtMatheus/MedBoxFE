@@ -54,9 +54,12 @@ export default {
         temperature: this.temperature,
         offset: this.offset
       };
+      const payload = {
+        updateConfigDto
+      };
       try {
-        await axios.patch('http://localhost:3000/configs/2', updateConfigDto);
-        this.$emit('submit', updateConfigDto); // Emit updated data to parent component
+        await axios.put('http://localhost:3000/configs/2', payload);
+        this.$emit('submit', updateConfigDto);
       } catch (error) {
         console.error('Erro ao enviar requisição PATCH:', error);
       }
